@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    >
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:id="@+id/albumImage"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/titleText"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:text="title"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/artistText"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:text="artist"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal|center_vertical"
+        >
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_skip_previous_black_24dp"
+            android:id="@+id/prevBtn"
+            android:layout_marginRight="20dp"
+            android:onClick="onClick"/>
+        <ImageView
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:id="@+id/playBtn"
+            android:onClick="onClick"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_skip_next_black_24dp"
+            android:id="@+id/nextBtn"
+            android:layout_marginLeft="20dp"
+            android:onClick="onClick"/>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/progressBar"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/curDurationTxt"
+            android:text="00:00"
+            android:layout_below="@id/progressBar"
+            android:layout_alignParentLeft="true"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:id="@+id/durationTxt"
+            android:text="00:00"
+            android:layout_below="@id/progressBar"
+            android:layout_alignParentRight="true"
+            />
+    </RelativeLayout>
+
+
+
+
+</LinearLayout>
