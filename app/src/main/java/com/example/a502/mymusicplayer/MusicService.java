@@ -1,6 +1,7 @@
 package com.example.a502.mymusicplayer;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -13,6 +14,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.RemoteException;
@@ -23,6 +25,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.RemoteViews;
 
+import java.nio.channels.Channel;
 import java.util.ArrayList;
 /**
  * Created by 502 on 2018-12-20.
@@ -34,8 +37,11 @@ public class MusicService extends Service {
     private String albumImgUri = "content://media/external/audio/albumart/";
     private RemoteViews remoteView;
     NotificationManager notificationManager;
-    NotificationCompat.Builder builder;
+    Notification.Builder builder;
+    NotificationChannel notificationChannel;
     int notifyID=1;
+
+    String Channel_ID="Channel_One";
 
     MusicListItem item;
     int curPosition;
@@ -178,7 +184,16 @@ public class MusicService extends Service {
 
         notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         remoteView=new RemoteViews(getPackageName(), R.layout.music_notification_activity);
-        builder=new NotificationCompat.Builder(this);
+
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+        {
+            notificationChannel = new NotificationChannel("channel_id", "channel_name",NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        builder = new Notification.Builder(this, notificationChannel.getId());
+
 
         mediaPlayer.setWakeMode(getApplicationContext(), PowerManager.PARTIAL_WAKE_LOCK);
 
@@ -323,7 +338,7 @@ public class MusicService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    NotificationCompat.Builder getNotiBuilder()
+    Notification.Builder getNotiBuilder()
     {
         Intent notiIntent =new Intent(this, PlayMusicActivity.class);
         PendingIntent albumImgPendingIntent=PendingIntent.getActivity(this,0,notiIntent, 0);
@@ -347,7 +362,7 @@ public class MusicService extends Service {
         return builder;
 
     }
-    NotificationCompat.Builder pasueNotiBuilder()
+    Notification.Builder pasueNotiBuilder()
     {
         PendingIntent playBtnPendingIntent=PendingIntent.getService(this, 0, new Intent(this, MusicService.class).setAction(MusicState.PLAY), 0);
         remoteView.setOnClickPendingIntent(R.id.playBtn, playBtnPendingIntent);
@@ -359,7 +374,7 @@ public class MusicService extends Service {
 
     }
 
-    NotificationCompat.Builder replayNotiBuilder()
+    Notification.Builder replayNotiBuilder()
     {
         PendingIntent pauseBtnPendingIntent=PendingIntent.getService(this, 0, new Intent(this, MusicService.class).setAction(MusicState.PAUSE), 0);
         remoteView.setOnClickPendingIntent(R.id.playBtn, pauseBtnPendingIntent);
