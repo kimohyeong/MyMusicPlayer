@@ -17,5 +17,5 @@ When you start the application, you can see the notification in the top bar and 
 
 ## Requirement
 * Android Studio 3.1.4
-* Android API Level 28
+* Android API Level 26
 
